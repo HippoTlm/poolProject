@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        //renseigne la bibliothèque utilisée (google map)
+        <uses-library android:name="com.google.android.maps" />
     </application>
+
+
+
+    //autorise l'accès internet
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
