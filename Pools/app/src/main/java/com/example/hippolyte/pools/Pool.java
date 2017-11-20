@@ -5,33 +5,27 @@ package com.example.hippolyte.pools;
  */
 
 public class Pool {
+    private int id;
     private String libelle;
-    private String adresse;
     private String ville;
-    private int codepostale ;
-    private int point_geo;
-    private int color;
+    private String adresse;
+    private int codepostal;
+    private double point_geoX;
+    private double point_geoY;
+    private boolean municipale;
 
-    public Pool(int color ,String libelle, String adresse,String ville,int codepostale,int point_geo) {
-        this.libelle=libelle;
-        this.adresse=adresse;
-        this.codepostale=codepostale;
+    public Pool(int id,String libelle, String ville, String adresse, int codepostal, double point_geoX, double point_geoY, boolean municipale) {
+        this.id=id;
         this.ville=ville;
-        this.point_geo=point_geo;
-        this.color=color;
-
+        this.adresse=adresse;
+        this.codepostal=codepostal;
+        this.point_geoX=point_geoX;
+        this.point_geoY=point_geoY;
+        this.municipale=municipale;
     }
 
-    public int getCodepostale() {
-        return codepostale;
-    }
-
-    public int getPoint_geo() {
-        return point_geo;
-    }
-
-    public String getAdresse() {
-        return adresse;
+    public int getId() {
+        return id;
     }
 
     public String getLibelle() {
@@ -42,31 +36,24 @@ public class Pool {
         return ville;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public String getAdresse() {
+        return adresse;
     }
 
-    public void setCodepostale(int codepostale) {
-        this.codepostale = codepostale;
+    public int getCodepostal() {
+        return codepostal;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public double getPoint_geoX() {
+        return point_geoX;
     }
 
-    public void setPoint_geo(int point_geo) {
-        this.point_geo = point_geo;
+    public double getPoint_geoY() {
+        return point_geoY;
     }
 
-    public void setVille(String ville) {
-        this.ville = ville;
+    public boolean isMunicipale() {
+        return municipale;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 }
