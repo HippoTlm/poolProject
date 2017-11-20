@@ -5,22 +5,23 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class Main2Activity extends AppCompatActivity {
-    TextView nom;
+    TextView nom2;
     TextView addresse;
-    TextView ville;
+    TextView ville2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        nom= (TextView)findViewById(R.id.nom);
+        nom2= (TextView)findViewById(R.id.nom1);
         addresse= (TextView)findViewById(R.id.adresse);
-        ville= (TextView)findViewById(R.id.ville);
+        ville2= (TextView)findViewById(R.id.ville1);
 
         Bundle bundle = getIntent().getExtras();
 
-        nom.setText(bundle.getString("pool"));
+        nom2.setText(bundle.getString("libelle"));
+        ville2.setText(bundle.getString("ville"));
 
 
 
