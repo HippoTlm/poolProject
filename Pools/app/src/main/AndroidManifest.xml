@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hippolyte.pools">
+    //autorise l'accès internet
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,11 +20,8 @@
         </activity>
         //renseigne la bibliothèque utilisée (google map)
         <uses-library android:name="com.google.android.maps" />
+
+        <activity android:name=".Main2Activity"></activity>
     </application>
-
-
-
-    //autorise l'accès internet
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

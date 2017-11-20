@@ -1,9 +1,12 @@
 package com.example.hippolyte.pools;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.util.Pools;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -27,6 +30,18 @@ public class MainActivity extends AppCompatActivity {
         PoolAdaptater adaptater = new PoolAdaptater(MainActivity.this, pools);
         listViewPools.setAdapter(adaptater);
 
+        listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                intent.putExtra("pool",listViewPools.getItemAtPosition(position).toString());
+                startActivity(intent);
+
+            }
+        });
+
+
+
 
     }
 
@@ -41,4 +56,7 @@ public class MainActivity extends AppCompatActivity {
         pools.add(new Pool(Color.GREEN,"Nom 6","Adresse 6","Ville 6",59006,6));
         return pools;
     }
+
+
+
 }
