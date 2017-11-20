@@ -40,7 +40,6 @@ public class PoolAdaptater extends ArrayAdapter<Pool>{
         Pool pool = getItem(position);
         viewHolder.nom.setText(pool.getLibelle());
         viewHolder.ville.setText(pool.getVille());
-        viewHolder.image.setImageDrawable(new ColorDrawable(pool.getColor()));
 
         return convertView;
     }
