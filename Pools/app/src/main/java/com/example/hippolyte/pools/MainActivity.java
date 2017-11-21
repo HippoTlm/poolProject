@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private TextView mTextView;
     private ListView listViewPools ;
+    DBHelper myBDHelper;
     private String [] pools=new String[]{
        "Piscine 1","Piscine 2","Piscine3", "Piscine 4","Piscine 5","Piscine 6"
     };
@@ -48,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
         listViewPools =(ListView)findViewById(R.id.listViewPools);
         mTextView = (TextView) findViewById(R.id.testJSON);
 
-        List<Pool> pools=genererPools();
-
-        PoolAdaptater adaptater = new PoolAdaptater(MainActivity.this, pools);
-        listViewPools.setAdapter(adaptater);
+        /*myBDHelper = new DBHelper(this);
+        final ArrayList<Pool> ListeDesPools = myBDHelper.getAllPools();
+        PoolAdaptater adaptater = new PoolAdaptater(MainActivity.this, ListeDesPools);
+        listViewPools.setAdapter(adaptater);*/
 
         listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                             //ligne d'en dessous juste pour test, A SUPPRIMER
                             mTextView.setText("Response is: "+ response.toString());
-                            JSONArray listPools = response.getJSONArray(POOLS_LIBELLE);
+                            //JSONArray listPools = response.getJSONArray(POOLS_LIBELLE);
                             Toast.makeText(getApplicationContext(), "Récupération réussie !", Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
@@ -122,20 +125,29 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray = new JSONArray(json);
+
+            //creating a string array for listview
+            String[] heroes = new String[jsonArray.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                //getting json object from the json array
+                JSONObject obj = jsonArray.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                heroes[i] = obj.getString("name");
+            }
+
+            //the array adapter to load data into list
+            //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, heroes);
+
+            //attaching adapter to listview
+            //listViewPools.setAdapter(arrayAdapter);
+        }
+
     }
-
-
-    private List<Pool> genererPools(){
-        List<Pool> pools=new ArrayList<>();
-        pools.add(new Pool(Color.GREEN,"Nom 1","Adresse 1","Ville 1",59001,1));
-        pools.add(new Pool(Color.GREEN,"Nom 2","Adresse 2","Ville 2",59002,2));
-        pools.add(new Pool(Color.GREEN,"Nom 3","Adresse 3","Ville 3",59003,3));
-        pools.add(new Pool(Color.GREEN,"Nom 4","Adresse 4","Ville 4",59004,4));
-        pools.add(new Pool(Color.GREEN,"Nom 5","Adresse 5","Ville 5",59005,5));
-        pools.add(new Pool(Color.GREEN,"Nom 6","Adresse 6","Ville 6",59006,6));
-        return pools;
-    }
-
-
-
 }

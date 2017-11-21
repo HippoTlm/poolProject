@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "MyDataBase.db";
@@ -77,27 +79,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean updatePool (Integer id, String libelle, String ville, String adresse, int codepostal, double point_geoX, double point_geoY, boolean municipale) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(POOLS_COLUMN_LIBELLE, libelle);
-        contentValues.put(POOLS_COLUMN_CITY, ville);
-        contentValues.put(POOLS_COLUMN_ADRESSE, adresse);
-        contentValues.put(POOLS_COLUMN_CODE_POSTAL, codepostal);
-        contentValues.put(POOLS_COLUMN_POINT_GEOX, point_geoX);
-        contentValues.put(POOLS_COLUMN_POINT_GEOY, point_geoY);
-        contentValues.put(POOLS_COLUMN_MUNICIPALE, municipale);
-        db.update(POOLS_TABLE_NAME, contentValues, POOLS_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
-        return true;
+    public ArrayList<Pool> getAllPools() {
+        /*ArrayList<String> listePools = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from "+POOLS_TABLE_NAME, null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            listePools.add(res.getString(res.getColumnIndex(POOLS_TABLE_NAME)));
+            res.moveToNext();
+        }
+        return listePools;*/
+        return null;
     }
-
-
-    public Integer deletePool (Integer id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(POOLS_TABLE_NAME,
-                POOLS_COLUMN_ID +" = ? ",
-                new String[] { Integer.toString(id) });
-    }
-
 
 }

@@ -1,6 +1,7 @@
 package com.example.hippolyte.pools;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +21,7 @@ import java.util.List;
 public class PoolAdaptater extends ArrayAdapter<Pool>{
 
 
-    public PoolAdaptater(Context context, List<Pool> pools) {
+    public PoolAdaptater(Context context, ArrayList<Pool> pools) {
         super(context,0, pools);
     }
 
@@ -40,7 +43,12 @@ public class PoolAdaptater extends ArrayAdapter<Pool>{
         Pool pool = getItem(position);
         viewHolder.nom.setText(pool.getLibelle());
         viewHolder.ville.setText(pool.getVille());
-        viewHolder.image.setImageDrawable(new ColorDrawable(pool.getColor()));
+        if (pool.isMunicipale()){
+            viewHolder.image.setImageDrawable(new ColorDrawable(Color.GREEN));
+        }else {
+            viewHolder.image.setImageDrawable(new ColorDrawable(Color.RED));
+        }
+
 
         return convertView;
     }
