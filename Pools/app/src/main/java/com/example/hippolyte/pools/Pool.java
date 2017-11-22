@@ -9,7 +9,7 @@ public class Pool {
     public String libelle;
     public String ville;
     public String adresse;
-    public int codepostal;
+    public String codepostal;
     public double point_geoX;
     public double point_geoY;
     public boolean municipale;

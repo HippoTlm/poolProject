@@ -10,16 +10,8 @@
         <ListView
             android:id="@+id/listViewPools"
             android:layout_width="match_parent"
-            android:layout_height="259dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"></ListView>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/testJSON"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="150dp"
-        android:text="TextView" />
 </RelativeLayout>

@@ -1,18 +1,14 @@
 package com.example.hippolyte.pools;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v4.util.Pools;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SimpleAdapter;
+
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,16 +22,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextView;
+
     private ListView listViewPools ;
-    DBHelper myBDHelper;
-    private String [] pools=new String[]{
-       "Piscine 1","Piscine 2","Piscine3", "Piscine 4","Piscine 5","Piscine 6"
-    };
+    private DBHelper myBDHelper = new DBHelper(this);
+    private PoolsRepo poolsRepo = new PoolsRepo(this);
+
+    private static String url = "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=mel_piscines&facet=commune&rows=-1";
+    private ArrayList<HashMap<String,String>> poolsList;
+    private int id;
+    private int pool_id=0;
+    private String commune;
+    private String codepostal;
+    private String pointgeoX;
+    private String pointgeoY;
+    private String urlPool;
+    private String libelle;
+
     public static final String POOLS_LIBELLE = "libelle";
     public static final String POOLS_CITY = "ville";
     public static final String POOLS_ADRESSE = "adresse";
@@ -44,27 +51,32 @@ public class MainActivity extends AppCompatActivity {
     public static final String POOLS_POINT_GEOY = "point geo Y";
     public static final String POOLS_MUNICIPALE = "municipale";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listViewPools =(ListView)findViewById(R.id.listViewPools);
-        mTextView = (TextView) findViewById(R.id.testJSON);
 
-        /*myBDHelper = new DBHelper(this);
-        final ArrayList<Pool> ListeDesPools = myBDHelper.getAllPools();
-        PoolAdaptater adaptater = new PoolAdaptater(MainActivity.this, ListeDesPools);
-        listViewPools.setAdapter(adaptater);*/
+        /*if(poolsList.size()!=0) {
+            listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ville = (TextView) view.findViewById(R.id.ville);
+                    libelle = (TextView) view.findViewById(R.id.nom);
+                    String libelle2 = libelle.getText().toString();
+                    String ville2=ville.getText().toString();
+                    Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+                    intent.putExtra("libelle",libelle2);
+                    intent.putExtra("ville",ville2);
+                    startActivity(intent);
+                }
+            });
 
-        listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
-                intent.putExtra("pool",listViewPools.getItemAtPosition(position).toString());
-                startActivity(intent);
 
-            }
-        });
+        }else{
+            Toast.makeText(this,"No student!",Toast.LENGTH_SHORT).show();
+        }*/
     }
 
 
@@ -103,17 +115,61 @@ public class MainActivity extends AppCompatActivity {
 
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this );
 
-            String url ="https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=mel_piscines&facet=commune";
-
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+            final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-
-                            //ligne d'en dessous juste pour test, A SUPPRIMER
-                            mTextView.setText("Response is: "+ response.toString());
-                            //JSONArray listPools = response.getJSONArray(POOLS_LIBELLE);
                             Toast.makeText(getApplicationContext(), "Récupération réussie !", Toast.LENGTH_SHORT).show();
+                            poolsList = new ArrayList<HashMap<String, String>>();
+                            try{
+                                JSONArray records = response.getJSONArray("records");
+                                for (int i = 0; i < records.length(); i++){
+                                    JSONObject piscine = records.getJSONObject(i);
+
+                                    JSONObject pools = piscine.getJSONObject("fields");
+                                    id = Integer.parseInt(pools.getString("objectid"));
+                                    commune = pools.getString("commune");
+                                    codepostal = pools.getString("code_postal");
+                                    urlPool = pools.getString("url");
+                                    libelle = pools.getString("libelle");
+
+                                    JSONArray coordonnees = pools.getJSONArray("geo_point_2d");
+                                    pointgeoY = String.valueOf(coordonnees.getDouble(0));
+                                    pointgeoX = String.valueOf(coordonnees.getDouble(1));
+
+                                    HashMap<String, String> pool = new HashMap<String, String>();
+                                    pool.put("id",String.valueOf(id));
+                                    pool.put("libelle",libelle);
+                                    pool.put("commune",commune);
+                                    pool.put("codepostal",codepostal);
+                                    pool.put("url",urlPool);
+                                    pool.put("pointgeoX",pointgeoX);
+                                    pool.put("pointgeoY",pointgeoY);
+
+                                    poolsList.add(pool);
+
+                                    Pool newPool = new Pool();
+                                    newPool.id = id;
+                                    newPool.libelle = libelle;
+                                    newPool.ville = commune;
+                                    newPool.codepostal = codepostal;
+                                    newPool.point_geoX = Double.parseDouble(pointgeoX);
+                                    newPool.point_geoY = Double.parseDouble(pointgeoY);
+                                    if (libelle.contains("MUNICIPALE")){
+                                        newPool.municipale=true;
+                                    }else{
+                                        newPool.municipale=false;
+                                    }
+                                    //pool_id = poolsRepo.insert(newPool);
+
+                                    //ligne d'en dessous juste pour test, A SUPPRIMER
+                                    Toast.makeText(MainActivity.this, "good", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }catch (JSONException e){
+                                Toast.makeText(MainActivity.this, "An error ocurred", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -125,29 +181,6 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        private void loadIntoListView(String json) throws JSONException {
-            //creating a json array from the json string
-            JSONArray jsonArray = new JSONArray(json);
-
-            //creating a string array for listview
-            String[] heroes = new String[jsonArray.length()];
-
-            //looping through all the elements in json array
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                //getting json object from the json array
-                JSONObject obj = jsonArray.getJSONObject(i);
-
-                //getting the name from the json object and putting it inside string array
-                heroes[i] = obj.getString("name");
-            }
-
-            //the array adapter to load data into list
-            //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, heroes);
-
-            //attaching adapter to listview
-            //listViewPools.setAdapter(arrayAdapter);
-        }
-
     }
+
 }

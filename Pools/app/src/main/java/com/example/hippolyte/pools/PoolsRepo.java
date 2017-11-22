@@ -107,7 +107,7 @@ public class PoolsRepo {
                 pool.libelle =cursor.getString(cursor.getColumnIndex(Pool.KEY_libelle));
                 pool.ville =cursor.getString(cursor.getColumnIndex(Pool.KEY_ville));
                 pool.adresse =cursor.getString(cursor.getColumnIndex(Pool.KEY_adresse));
-                pool.codepostal =cursor.getInt(cursor.getColumnIndex(Pool.KEY_codepostal));
+                pool.codepostal =cursor.getString(cursor.getColumnIndex(Pool.KEY_codepostal));
                 pool.point_geoX =cursor.getDouble(cursor.getColumnIndex(Pool.KEY_pointgeoX));
                 pool.point_geoY =cursor.getDouble(cursor.getColumnIndex(Pool.KEY_pointgeoY));
                 //pool.municipale =cursor.(cursor.getColumnIndex(Pool.KEY_municipale));
