@@ -24,10 +24,10 @@ public class PoolsRepo {
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Pool.KEY_id, pool.id);
+        //values.put(Pool.KEY_id, pool.id);
         values.put(Pool.KEY_libelle,pool.libelle);
         values.put(Pool.KEY_ville, pool.ville);
-        values.put(Pool.KEY_adresse, pool.adresse);
+        values.put(Pool.KEY_adresse, pool.url);
         values.put(Pool.KEY_codepostal, pool.codepostal);
         values.put(Pool.KEY_pointgeoX, pool.point_geoX);
         values.put(Pool.KEY_pointgeoY, pool.point_geoY);
@@ -106,11 +106,11 @@ public class PoolsRepo {
                 pool.id =cursor.getInt(cursor.getColumnIndex(Pool.KEY_id));
                 pool.libelle =cursor.getString(cursor.getColumnIndex(Pool.KEY_libelle));
                 pool.ville =cursor.getString(cursor.getColumnIndex(Pool.KEY_ville));
-                pool.adresse =cursor.getString(cursor.getColumnIndex(Pool.KEY_adresse));
+                pool.url =cursor.getString(cursor.getColumnIndex(Pool.KEY_adresse));
                 pool.codepostal =cursor.getString(cursor.getColumnIndex(Pool.KEY_codepostal));
-                pool.point_geoX =cursor.getDouble(cursor.getColumnIndex(Pool.KEY_pointgeoX));
-                pool.point_geoY =cursor.getDouble(cursor.getColumnIndex(Pool.KEY_pointgeoY));
-                //pool.municipale =cursor.(cursor.getColumnIndex(Pool.KEY_municipale));
+                pool.point_geoX =cursor.getString(cursor.getColumnIndex(Pool.KEY_pointgeoX));
+                pool.point_geoY =cursor.getString(cursor.getColumnIndex(Pool.KEY_pointgeoY));
+                pool.municipale =cursor.getString(cursor.getColumnIndex(Pool.KEY_municipale));
 
             } while (cursor.moveToNext());
         }

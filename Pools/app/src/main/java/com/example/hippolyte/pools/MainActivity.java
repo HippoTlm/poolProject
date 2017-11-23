@@ -9,6 +9,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,13 +30,10 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewPools ;
-    private DBHelper myBDHelper = new DBHelper(this);
     private PoolsRepo poolsRepo = new PoolsRepo(this);
 
     private static String url = "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=mel_piscines&facet=commune&rows=-1";
     private ArrayList<HashMap<String,String>> poolsList;
-    private int id;
-    private int pool_id=0;
     private String commune;
     private String codepostal;
     private String pointgeoX;
@@ -43,20 +41,15 @@ public class MainActivity extends AppCompatActivity {
     private String urlPool;
     private String libelle;
 
-    public static final String POOLS_LIBELLE = "libelle";
-    public static final String POOLS_CITY = "ville";
-    public static final String POOLS_ADRESSE = "adresse";
-    public static final String POOLS_CODE_POSTAL = "code postal";
-    public static final String POOLS_POINT_GEOX = "point geo X";
-    public static final String POOLS_POINT_GEOY = "point geo Y";
-    public static final String POOLS_MUNICIPALE = "municipale";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listViewPools =(ListView)findViewById(R.id.listViewPools);
+
+        ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
+        PoolAdaptater adapter = new PoolAdaptater(this,poolList);
+        listViewPools.setAdapter(adapter);
 
         /*if(poolsList.size()!=0) {
             listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                                     JSONObject piscine = records.getJSONObject(i);
 
                                     JSONObject pools = piscine.getJSONObject("fields");
-                                    id = Integer.parseInt(pools.getString("objectid"));
                                     commune = pools.getString("commune");
                                     codepostal = pools.getString("code_postal");
                                     urlPool = pools.getString("url");
@@ -137,30 +129,20 @@ public class MainActivity extends AppCompatActivity {
                                     pointgeoY = String.valueOf(coordonnees.getDouble(0));
                                     pointgeoX = String.valueOf(coordonnees.getDouble(1));
 
-                                    HashMap<String, String> pool = new HashMap<String, String>();
-                                    pool.put("id",String.valueOf(id));
-                                    pool.put("libelle",libelle);
-                                    pool.put("commune",commune);
-                                    pool.put("codepostal",codepostal);
-                                    pool.put("url",urlPool);
-                                    pool.put("pointgeoX",pointgeoX);
-                                    pool.put("pointgeoY",pointgeoY);
-
-                                    poolsList.add(pool);
-
                                     Pool newPool = new Pool();
-                                    newPool.id = id;
+                                    //newPool.id = id;
+                                    newPool.url = urlPool;
                                     newPool.libelle = libelle;
                                     newPool.ville = commune;
                                     newPool.codepostal = codepostal;
-                                    newPool.point_geoX = Double.parseDouble(pointgeoX);
-                                    newPool.point_geoY = Double.parseDouble(pointgeoY);
-                                    if (libelle.contains("MUNICIPALE")){
-                                        newPool.municipale=true;
+                                    newPool.point_geoX = pointgeoX;
+                                    newPool.point_geoY = pointgeoY;
+                                    if (libelle.contains(" MUNICIPALE ")){
+                                        newPool.municipale="true";
                                     }else{
-                                        newPool.municipale=false;
+                                        newPool.municipale="false";
                                     }
-                                    //pool_id = poolsRepo.insert(newPool);
+                                    poolsRepo.insert(newPool);
 
                                     //ligne d'en dessous juste pour test, A SUPPRIMER
                                     Toast.makeText(MainActivity.this, "good", Toast.LENGTH_SHORT).show();

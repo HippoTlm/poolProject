@@ -23,14 +23,14 @@ public class DBHelper extends SQLiteOpenHelper {
         //All necessary tables you like to create will create here
 
         String CREATE_TABLE_POOL = "CREATE TABLE " + Pool.TABLE  + "("
-                + Pool.KEY_id  + " INTEGER PRIMARY KEY,"
+                + Pool.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Pool.KEY_libelle + " TEXT, "
                 + Pool.KEY_ville + " TEXT, "
                 + Pool.KEY_adresse + " TEXT, "
-                + Pool.KEY_codepostal + " INTEGER, "
-                + Pool.KEY_pointgeoX + " DOUBLE, "
-                + Pool.KEY_pointgeoY + " DOUBLE, "
-                + Pool.KEY_municipale + " BOOLEAN )";
+                + Pool.KEY_codepostal + " TEXT, "
+                + Pool.KEY_pointgeoX + " TEXT, "
+                + Pool.KEY_pointgeoY + " TEXT, "
+                + Pool.KEY_municipale + " TEXT )";
 
         db.execSQL(CREATE_TABLE_POOL);
 
