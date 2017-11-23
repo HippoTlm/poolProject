@@ -5,68 +5,24 @@ package com.example.hippolyte.pools;
  */
 
 public class Pool {
-    private String libelle;
-    private String adresse;
-    private String ville;
-    private int codepostale ;
-    private int point_geo;
-    private int color;
+    //declaration des parametres d'une piscine
+    public int id;
+    public String libelle;
+    public String ville;
+    public String url;
+    public String codepostal;
+    public String point_geoX;
+    public String point_geoY;
+    public String municipale;
 
-    public Pool(int color ,String libelle, String adresse,String ville,int codepostale,int point_geo) {
-        this.libelle=libelle;
-        this.adresse=adresse;
-        this.codepostale=codepostale;
-        this.ville=ville;
-        this.point_geo=point_geo;
-        this.color=color;
-
-    }
-
-    public int getCodepostale() {
-        return codepostale;
-    }
-
-    public int getPoint_geo() {
-        return point_geo;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public void setCodepostale(int codepostale) {
-        this.codepostale = codepostale;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
-    public void setPoint_geo(int point_geo) {
-        this.point_geo = point_geo;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
+    //declaration des parametres de la base de donnees
+    public static final String TABLE = "Pool";
+    public static final String KEY_id = "id";
+    public static final String KEY_libelle = "libelle";
+    public static final String KEY_ville = "ville";
+    public static final String KEY_adresse = "adresse";
+    public static final String KEY_codepostal = "codepostal";
+    public static final String KEY_pointgeoX = "pointgeoX";
+    public static final String KEY_pointgeoY = "pointgeoY";
+    public static final String KEY_municipale = "municipale";
 }
