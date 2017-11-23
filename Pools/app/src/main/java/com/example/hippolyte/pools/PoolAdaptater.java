@@ -1,7 +1,6 @@
 package com.example.hippolyte.pools;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -11,10 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by thomas on 16/11/2017.
@@ -32,6 +29,7 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
         }
 
         PoolViewHolder viewHolder = (PoolViewHolder) convertView.getTag();
+
         if(viewHolder == null){
             viewHolder = new PoolViewHolder();
             viewHolder.nom = (TextView) convertView.findViewById(R.id.nom);
@@ -39,14 +37,20 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
             viewHolder.cp = (TextView) convertView.findViewById(R.id.textViewCP);
             viewHolder.url = (TextView) convertView.findViewById(R.id.textViewURL);
+            viewHolder.ptX = (TextView) convertView.findViewById(R.id.textViewPTX);
+            viewHolder.ptY = (TextView) convertView.findViewById(R.id.textViewPTY);
             convertView.setTag(viewHolder);
         }
+
         HashMap<String,String> pool = getItem(position);
 
         viewHolder.nom.setText(pool.get("libelle"));
         viewHolder.ville.setText(pool.get("ville"));
         viewHolder.url.setText(pool.get("adresse"));
         viewHolder.cp.setText(pool.get("codepostal"));
+        viewHolder.ptX.setText(pool.get("pointgeoX"));
+        viewHolder.ptY.setText(pool.get("pointgeoY"));
+
         if (pool.get("municipale").equals("true")){
             viewHolder.image.setImageDrawable(new ColorDrawable(Color.GREEN));
         }else if (pool.get("municipale").equals("false")){
@@ -64,5 +68,7 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
         public ImageView image;
         public TextView cp;
         public TextView url;
+        public TextView ptX;
+        public TextView ptY;
     }
 }

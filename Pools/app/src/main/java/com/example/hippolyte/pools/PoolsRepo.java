@@ -23,7 +23,6 @@ public class PoolsRepo {
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(Pool.KEY_id, pool.id);
         values.put(Pool.KEY_libelle,pool.libelle);
         values.put(Pool.KEY_ville, pool.ville);
         values.put(Pool.KEY_adresse, pool.url);
@@ -34,6 +33,7 @@ public class PoolsRepo {
 
         // Inserting Row
         long pool_id = db.insert(Pool.TABLE, null, values);
+        //dbHelper.onUpgrade(db,db.getVersion(),db.getVersion()+1);
         db.close(); // Closing database connection
         return (int) pool_id;
     }

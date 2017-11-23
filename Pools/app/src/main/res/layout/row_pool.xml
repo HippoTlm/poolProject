@@ -28,11 +28,12 @@
         android:id="@+id/ville"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/nom"
+        android:layout_below="@+id/nom"
         android:textColor="@android:color/black"
         android:textSize="25sp"
-        tools:text="Ville"
-        android:layout_alignBottom="@+id/image"
-        android:layout_alignStart="@+id/nom" />
+        android:textStyle="italic"
+        tools:text="Ville" />
 
     <TextView
         android:id="@+id/textViewCP"
@@ -48,6 +49,25 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textViewCP"
         android:layout_below="@+id/textViewCP"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewPTX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/nom"
+        android:layout_below="@+id/nom"
+        android:layout_marginEnd="17dp"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewPTY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewPTX"
+        android:layout_below="@+id/textViewPTX"
+        android:text="TextView"
         android:visibility="invisible" />
 
 </RelativeLayout>

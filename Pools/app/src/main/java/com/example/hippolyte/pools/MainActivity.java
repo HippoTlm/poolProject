@@ -1,7 +1,7 @@
 package com.example.hippolyte.pools;
 
-import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,9 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,16 +33,20 @@ import static com.example.hippolyte.pools.R.id.ville;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView listViewPools ;
-    private TextView uneVille;
-    private TextView unLibelle;
-    private TextView uneURL;
-    private TextView unCP;
+    private ListView tvListViewPools ;
+    private TextView tvVille;
+    private TextView tvLibelle;
+    private TextView tvURL;
+    private TextView tvCP;
+    private TextView tvPointGeoX;
+    private TextView tvPointGeoY;
 
     private PoolsRepo poolsRepo = new PoolsRepo(this);
+    private DBHelper dbHelper = new DBHelper(this);
+    private SQLiteDatabase db;
 
-    private static String url = "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=mel_piscines&facet=commune&rows=-1";
-    private ArrayList<HashMap<String,String>> poolsList;
+    private static String url =
+            "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=mel_piscines&facet=commune&rows=-1";
     private String commune;
     private String codepostal;
     private String pointgeoX;
@@ -56,34 +58,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listViewPools =(ListView)findViewById(R.id.listViewPools);
+        tvListViewPools =(ListView)findViewById(R.id.listViewPools);
 
         ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
         PoolAdaptater adapter = new PoolAdaptater(this,poolList);
-        listViewPools.setAdapter(adapter);
+        tvListViewPools.setAdapter(adapter);
 
         if(poolList.size()!=0) {
-            listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            tvListViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    uneVille = (TextView) view.findViewById(ville);
-                    unLibelle = (TextView) view.findViewById(R.id.nom);
-                    unCP = (TextView) view.findViewById(R.id.textViewCP);
-                    uneURL = (TextView) view.findViewById(R.id.textViewURL);
-                    String libelle2 = unLibelle.getText().toString();
-                    String ville2 = uneVille.getText().toString();
-                    String url2 = uneURL.getText().toString();
-                    String cp2 = unCP.getText().toString();
-                    Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+                    tvVille = (TextView) view.findViewById(ville);
+                    tvLibelle = (TextView) view.findViewById(R.id.nom);
+                    tvCP = (TextView) view.findViewById(R.id.textViewCP);
+                    tvURL = (TextView) view.findViewById(R.id.textViewURL);
+                    tvPointGeoX = (TextView) view.findViewById(R.id.textViewPTX);
+                    tvPointGeoY = (TextView) view.findViewById(R.id.textViewPTY);
+
+                    String libelle2 = tvLibelle.getText().toString();
+                    String ville2 = tvVille.getText().toString();
+                    String url2 = tvURL.getText().toString();
+                    String cp2 = tvCP.getText().toString();
+                    String ptX2 = tvPointGeoX.getText().toString();
+                    String ptY2 = tvPointGeoY.getText().toString();
+
+                    Intent intent = new Intent(getApplicationContext(),PoolDetails.class);
                     intent.putExtra("cp",cp2);
                     intent.putExtra("url",url2);
                     intent.putExtra("libelle",libelle2);
                     intent.putExtra("ville",ville2);
+                    intent.putExtra("ptX",ptX2);
+                    intent.putExtra("ptY",ptY2);
                     startActivity(intent);
                 }
             });
         }else{
-            Toast.makeText(this,"No student!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"No pools yet!",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -109,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         if (id== R.id.action_rotate) {
             RecupererJson recupererJson = new RecupererJson();
             recupererJson.execute();
+            deleteDatabase(dbHelper.getDatabaseName());
             return true;
 
         }
@@ -130,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
 
                             Toast.makeText(getApplicationContext(), "Récupération réussie !", Toast.LENGTH_SHORT).show();
-                            poolsList = new ArrayList<HashMap<String, String>>();
                             try{
                                 JSONArray records = response.getJSONArray("records");
                                 for (int i = 0; i < records.length(); i++){
@@ -147,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                                     pointgeoX = String.valueOf(coordonnees.getDouble(1));
 
                                     Pool newPool = new Pool();
-                                    //newPool.id = id;
                                     newPool.url = urlPool;
                                     newPool.libelle = libelle;
                                     newPool.ville = commune;
@@ -164,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
                                 PoolAdaptater adapter = new PoolAdaptater(MainActivity.this,poolList);
-                                listViewPools.setAdapter(adapter);
+                                tvListViewPools.setAdapter(adapter);
                             }catch (JSONException e){
                                 Toast.makeText(MainActivity.this, "An error ocurred", Toast.LENGTH_SHORT).show();
                             }
