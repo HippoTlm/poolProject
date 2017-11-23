@@ -25,6 +25,7 @@ public class PoolDetails extends AppCompatActivity {
         tvPtX = (TextView) findViewById(R.id.ptXVille);
         tvPtY = (TextView) findViewById(R.id.ptYVille);
 
+        //recupere les infos de la piscine dans l'intent pour l'affichage des details
         Bundle bundle = getIntent().getExtras();
         tvNom.setText(bundle.getString("libelle"));
         tvVille.setText(bundle.getString("ville"));
@@ -32,6 +33,8 @@ public class PoolDetails extends AppCompatActivity {
         tvCP.setText(bundle.getString("cp"));
         tvPtX.setText(bundle.getString("ptX"));
         tvPtY.setText(bundle.getString("ptY"));
+
+        //a enlever a la fin
         Toast.makeText(this, tvPtX.getText()+" -- "+tvPtY.getText(), Toast.LENGTH_SHORT).show();
     }
 }

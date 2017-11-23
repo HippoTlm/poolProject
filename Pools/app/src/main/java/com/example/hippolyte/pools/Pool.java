@@ -5,6 +5,7 @@ package com.example.hippolyte.pools;
  */
 
 public class Pool {
+    //declaration des parametres d'une piscine
     public int id;
     public String libelle;
     public String ville;
@@ -14,8 +15,8 @@ public class Pool {
     public String point_geoY;
     public String municipale;
 
+    //declaration des parametres de la base de donnees
     public static final String TABLE = "Pool";
-
     public static final String KEY_id = "id";
     public static final String KEY_libelle = "libelle";
     public static final String KEY_ville = "ville";

@@ -60,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvListViewPools =(ListView)findViewById(R.id.listViewPools);
 
+        //appel de l'adaptater pour afficher les piscines en liste
         ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
-        PoolAdaptater adapter = new PoolAdaptater(this,poolList);
+        PoolAdapter adapter = new PoolAdapter(this,poolList);
         tvListViewPools.setAdapter(adapter);
 
         if(poolList.size()!=0) {
             tvListViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                //clic sur une piscine pour afficher ses details
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     tvVille = (TextView) view.findViewById(ville);
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     String ptX2 = tvPointGeoX.getText().toString();
                     String ptY2 = tvPointGeoY.getText().toString();
 
+                    //envoi des infos de la piscines dans un intent
                     Intent intent = new Intent(getApplicationContext(),PoolDetails.class);
                     intent.putExtra("cp",cp2);
                     intent.putExtra("url",url2);
@@ -119,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         if (id== R.id.action_rotate) {
             RecupererJson recupererJson = new RecupererJson();
             recupererJson.execute();
-            deleteDatabase(dbHelper.getDatabaseName());
             return true;
 
         }
@@ -127,9 +129,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //recuperation du JSON en arriere plan
     class RecupererJson extends AsyncTask<Void, Integer, Void> {
-
         @Override
         protected Void doInBackground(Void... params) {
 
@@ -139,8 +140,15 @@ public class MainActivity extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            deleteDatabase(dbHelper.getDatabaseName());
+                            Toast.makeText(getApplicationContext(),
+                                    "Récupération réussie !",
+                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,
+                                    "La couleur verte indique que la piscine est municipale.",
+                                    Toast.LENGTH_LONG).show();
 
-                            Toast.makeText(getApplicationContext(), "Récupération réussie !", Toast.LENGTH_SHORT).show();
+                            //parsing du JSON
                             try{
                                 JSONArray records = response.getJSONArray("records");
                                 for (int i = 0; i < records.length(); i++){
@@ -156,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                                     pointgeoY = String.valueOf(coordonnees.getDouble(0));
                                     pointgeoX = String.valueOf(coordonnees.getDouble(1));
 
+                                    //implementation de la base de donnees avec chaque piscine de la liste
                                     Pool newPool = new Pool();
                                     newPool.url = urlPool;
                                     newPool.libelle = libelle;
@@ -171,8 +180,9 @@ public class MainActivity extends AppCompatActivity {
                                     poolsRepo.insert(newPool);
                                 }
 
+                                //mise a jour de la liste des piscines apres recuperation du JSON
                                 ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
-                                PoolAdaptater adapter = new PoolAdaptater(MainActivity.this,poolList);
+                                PoolAdapter adapter = new PoolAdapter(MainActivity.this,poolList);
                                 tvListViewPools.setAdapter(adapter);
                             }catch (JSONException e){
                                 Toast.makeText(MainActivity.this, "An error ocurred", Toast.LENGTH_SHORT).show();

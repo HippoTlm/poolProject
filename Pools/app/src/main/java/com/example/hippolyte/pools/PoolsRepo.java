@@ -19,6 +19,7 @@ public class PoolsRepo {
         dbHelper = new DBHelper(context);
     }
 
+    //permet d'inserer une piscine dans la base de donnees
     public int insert(Pool pool) {
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -33,11 +34,11 @@ public class PoolsRepo {
 
         // Inserting Row
         long pool_id = db.insert(Pool.TABLE, null, values);
-        //dbHelper.onUpgrade(db,db.getVersion(),db.getVersion()+1);
         db.close(); // Closing database connection
         return (int) pool_id;
     }
 
+    //permet de recuperer les elements contenus dans la base de donnees
     public ArrayList<HashMap<String, String>> getPoolsList() {
         //Open connection to read only
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -78,44 +79,5 @@ public class PoolsRepo {
         db.close();
         return poolList;
 
-    }
-
-    public Pool getPoolById(int Id){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT  " +
-                Pool.KEY_id + "," +
-                Pool.KEY_libelle + "," +
-                Pool.KEY_ville + "," +
-                Pool.KEY_adresse + "," +
-                Pool.KEY_codepostal + "," +
-                Pool.KEY_pointgeoX + "," +
-                Pool.KEY_pointgeoY + "," +
-                Pool.KEY_municipale +
-                " FROM " + Pool.TABLE
-                + " WHERE " +
-                Pool.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
-
-        int iCount =0;
-        Pool pool = new Pool();
-
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(Id) } );
-
-        if (cursor.moveToFirst()) {
-            do {
-                pool.id =cursor.getInt(cursor.getColumnIndex(Pool.KEY_id));
-                pool.libelle =cursor.getString(cursor.getColumnIndex(Pool.KEY_libelle));
-                pool.ville =cursor.getString(cursor.getColumnIndex(Pool.KEY_ville));
-                pool.url =cursor.getString(cursor.getColumnIndex(Pool.KEY_adresse));
-                pool.codepostal =cursor.getString(cursor.getColumnIndex(Pool.KEY_codepostal));
-                pool.point_geoX =cursor.getString(cursor.getColumnIndex(Pool.KEY_pointgeoX));
-                pool.point_geoY =cursor.getString(cursor.getColumnIndex(Pool.KEY_pointgeoY));
-                pool.municipale =cursor.getString(cursor.getColumnIndex(Pool.KEY_municipale));
-
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return pool;
     }
 }

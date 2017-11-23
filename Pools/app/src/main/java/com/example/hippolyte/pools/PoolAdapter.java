@@ -17,9 +17,9 @@ import java.util.HashMap;
  * Created by thomas on 16/11/2017.
  */
 
-public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
+public class PoolAdapter extends ArrayAdapter<HashMap<String,String>>{
 
-    public PoolAdaptater(Activity context, ArrayList mapArrayList) {
+    public PoolAdapter(Activity context, ArrayList mapArrayList) {
         super(context, 0, mapArrayList);
     }
     @Override
@@ -42,8 +42,8 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
             convertView.setTag(viewHolder);
         }
 
+        //recupere les parametres d'une piscine pour l'affichage dans la liste
         HashMap<String,String> pool = getItem(position);
-
         viewHolder.nom.setText(pool.get("libelle"));
         viewHolder.ville.setText(pool.get("ville"));
         viewHolder.url.setText(pool.get("adresse"));
