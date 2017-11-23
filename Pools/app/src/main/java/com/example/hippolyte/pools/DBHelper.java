@@ -31,16 +31,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Pool.KEY_pointgeoX + " TEXT, "
                 + Pool.KEY_pointgeoY + " TEXT, "
                 + Pool.KEY_municipale + " TEXT )";
-
+        db.execSQL("DROP TABLE IF EXISTS " + Pool.TABLE);
         db.execSQL(CREATE_TABLE_POOL);
+
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed, all data will be gone!!!
-        db.execSQL("DROP TABLE IF EXISTS " + Pool.TABLE);
-
+        if(oldVersion<1){
+            db.execSQL("DROP TABLE IF EXISTS " + Pool.TABLE);
+        }
         // Create tables again
         onCreate(db);
 

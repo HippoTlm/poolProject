@@ -20,7 +20,6 @@ public class PoolsRepo {
     }
 
     public int insert(Pool pool) {
-
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -64,7 +63,7 @@ public class PoolsRepo {
                 HashMap<String, String> pool = new HashMap<String, String>();
                 pool.put("id", cursor.getString(cursor.getColumnIndex(Pool.KEY_id)));
                 pool.put("libelle", cursor.getString(cursor.getColumnIndex(Pool.KEY_libelle)));
-                pool.put("ville", cursor.getString(cursor.getColumnIndex(Pool.KEY_libelle)));
+                pool.put("ville", cursor.getString(cursor.getColumnIndex(Pool.KEY_ville)));
                 pool.put("adresse", cursor.getString(cursor.getColumnIndex(Pool.KEY_adresse)));
                 pool.put("codepostal", cursor.getString(cursor.getColumnIndex(Pool.KEY_codepostal)));
                 pool.put("pointgeoX", cursor.getString(cursor.getColumnIndex(Pool.KEY_pointgeoX)));

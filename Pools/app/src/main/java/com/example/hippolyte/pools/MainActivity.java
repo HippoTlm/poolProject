@@ -1,5 +1,6 @@
 package com.example.hippolyte.pools;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewPools ;
+
     private PoolsRepo poolsRepo = new PoolsRepo(this);
 
     private static String url = "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=mel_piscines&facet=commune&rows=-1";
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             RecupererJson recupererJson = new RecupererJson();
             recupererJson.execute();
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+
                             Toast.makeText(getApplicationContext(), "Récupération réussie !", Toast.LENGTH_SHORT).show();
                             poolsList = new ArrayList<HashMap<String, String>>();
                             try{
@@ -137,21 +141,20 @@ public class MainActivity extends AppCompatActivity {
                                     newPool.codepostal = codepostal;
                                     newPool.point_geoX = pointgeoX;
                                     newPool.point_geoY = pointgeoY;
-                                    if (libelle.contains(" MUNICIPALE ")){
+                                    if (libelle.contains(" MUNICIPALE ") || libelle.contains(" MUNICIPAL ") ){
                                         newPool.municipale="true";
                                     }else{
                                         newPool.municipale="false";
                                     }
                                     poolsRepo.insert(newPool);
-
-                                    //ligne d'en dessous juste pour test, A SUPPRIMER
-                                    Toast.makeText(MainActivity.this, "good", Toast.LENGTH_SHORT).show();
                                 }
 
+                                ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
+                                PoolAdaptater adapter = new PoolAdaptater(MainActivity.this,poolList);
+                                listViewPools.setAdapter(adapter);
                             }catch (JSONException e){
                                 Toast.makeText(MainActivity.this, "An error ocurred", Toast.LENGTH_SHORT).show();
                             }
-
                         }
                     }, new Response.ErrorListener() {
                 @Override

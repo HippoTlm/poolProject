@@ -45,8 +45,10 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
         viewHolder.ville.setText(pool.get("ville"));
         if (pool.get("municipale").equals("true")){
             viewHolder.image.setImageDrawable(new ColorDrawable(Color.GREEN));
-        }else{
+        }else if (pool.get("municipale").equals("false")){
             viewHolder.image.setImageDrawable(new ColorDrawable(Color.RED));
+        }else{
+            viewHolder.image.setImageDrawable(new ColorDrawable(Color.YELLOW));
         }
 
         return convertView;
