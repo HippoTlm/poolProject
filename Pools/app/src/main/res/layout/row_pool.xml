@@ -28,10 +28,26 @@
         android:id="@+id/ville"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/nom"
-        android:layout_below="@+id/nom"
         android:textColor="@android:color/black"
         android:textSize="25sp"
-        tools:text="Ville" />
+        tools:text="Ville"
+        android:layout_alignBottom="@+id/image"
+        android:layout_alignStart="@+id/nom" />
+
+    <TextView
+        android:id="@+id/textViewCP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/nom"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textViewCP"
+        android:layout_below="@+id/textViewCP"
+        android:visibility="invisible" />
 
 </RelativeLayout>

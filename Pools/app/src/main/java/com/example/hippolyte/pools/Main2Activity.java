@@ -8,20 +8,24 @@ public class Main2Activity extends AppCompatActivity {
     TextView nom2;
     TextView addresse;
     TextView ville2;
+    TextView cp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        nom2= (TextView)findViewById(R.id.nom1);
-        addresse= (TextView)findViewById(R.id.adresse);
-        ville2= (TextView)findViewById(R.id.ville1);
+        nom2= (TextView)findViewById(R.id.nomPiscine);
+        addresse= (TextView)findViewById(R.id.urlVille);
+        ville2= (TextView)findViewById(R.id.nomVille);
+        cp = (TextView) findViewById(R.id.cPVille);
 
         Bundle bundle = getIntent().getExtras();
 
         nom2.setText(bundle.getString("libelle"));
         ville2.setText(bundle.getString("ville"));
+        addresse.setText(bundle.getString("url"));
+        cp.setText(bundle.getString("cp"));
 
 
 

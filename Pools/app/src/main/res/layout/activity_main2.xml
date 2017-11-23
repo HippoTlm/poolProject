@@ -7,30 +7,39 @@
     tools:context="com.example.hippolyte.pools.Main2Activity">
 
     <TextView
-        android:id="@+id/nom1"
+        android:id="@+id/nomPiscine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/adresse"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:text="TextView"
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/adresse"
+        android:id="@+id/nomVille"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:textSize="30sp"
-        android:text="TextView"
-        android:layout_below="@+id/nom1"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/ville1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/adresse"
-        android:layout_below="@+id/adresse"
-        android:layout_marginTop="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nomPiscine"
         android:text="TextView"
         android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/cPVille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nomVille"
+        android:text="TextView"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/urlVille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/cPVille"
+        android:text="TextView"
+        android:textSize="30sp" />
+
 </RelativeLayout>

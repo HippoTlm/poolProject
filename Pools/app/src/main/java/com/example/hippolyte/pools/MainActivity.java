@@ -1,11 +1,14 @@
 package com.example.hippolyte.pools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -28,9 +31,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.example.hippolyte.pools.R.id.ville;
+
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewPools ;
+    private TextView uneVille;
+    private TextView unLibelle;
+    private TextView uneURL;
+    private TextView unCP;
 
     private PoolsRepo poolsRepo = new PoolsRepo(this);
 
@@ -53,25 +62,29 @@ public class MainActivity extends AppCompatActivity {
         PoolAdaptater adapter = new PoolAdaptater(this,poolList);
         listViewPools.setAdapter(adapter);
 
-        /*if(poolsList.size()!=0) {
+        if(poolList.size()!=0) {
             listViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ville = (TextView) view.findViewById(R.id.ville);
-                    libelle = (TextView) view.findViewById(R.id.nom);
-                    String libelle2 = libelle.getText().toString();
-                    String ville2=ville.getText().toString();
+                    uneVille = (TextView) view.findViewById(ville);
+                    unLibelle = (TextView) view.findViewById(R.id.nom);
+                    unCP = (TextView) view.findViewById(R.id.textViewCP);
+                    uneURL = (TextView) view.findViewById(R.id.textViewURL);
+                    String libelle2 = unLibelle.getText().toString();
+                    String ville2 = uneVille.getText().toString();
+                    String url2 = uneURL.getText().toString();
+                    String cp2 = unCP.getText().toString();
                     Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+                    intent.putExtra("cp",cp2);
+                    intent.putExtra("url",url2);
                     intent.putExtra("libelle",libelle2);
                     intent.putExtra("ville",ville2);
                     startActivity(intent);
                 }
             });
-
-
         }else{
             Toast.makeText(this,"No student!",Toast.LENGTH_SHORT).show();
-        }*/
+        }
     }
 
 

@@ -37,12 +37,16 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
             viewHolder.nom = (TextView) convertView.findViewById(R.id.nom);
             viewHolder.ville = (TextView) convertView.findViewById(R.id.ville);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
+            viewHolder.cp = (TextView) convertView.findViewById(R.id.textViewCP);
+            viewHolder.url = (TextView) convertView.findViewById(R.id.textViewURL);
             convertView.setTag(viewHolder);
         }
         HashMap<String,String> pool = getItem(position);
 
         viewHolder.nom.setText(pool.get("libelle"));
         viewHolder.ville.setText(pool.get("ville"));
+        viewHolder.url.setText(pool.get("adresse"));
+        viewHolder.cp.setText(pool.get("codepostal"));
         if (pool.get("municipale").equals("true")){
             viewHolder.image.setImageDrawable(new ColorDrawable(Color.GREEN));
         }else if (pool.get("municipale").equals("false")){
@@ -58,5 +62,7 @@ public class PoolAdaptater extends ArrayAdapter<HashMap<String,String>>{
         public TextView nom ;
         public TextView ville;
         public ImageView image;
+        public TextView cp;
+        public TextView url;
     }
 }
