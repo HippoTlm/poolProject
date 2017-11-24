@@ -8,9 +8,13 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:srcCompat="@android:drawable/checkbox_off_background"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textViewCP"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/nom"
@@ -20,7 +24,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/image"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         tools:text="Piscine" />
 
@@ -31,7 +35,7 @@
         android:layout_alignStart="@+id/nom"
         android:layout_below="@+id/nom"
         android:textColor="@android:color/black"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:textStyle="italic"
         tools:text="Ville" />
 
@@ -41,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/nom"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textViewURL"
@@ -49,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textViewCP"
         android:layout_below="@+id/textViewCP"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textViewPTX"
@@ -59,7 +63,7 @@
         android:layout_below="@+id/nom"
         android:layout_marginEnd="17dp"
         android:text="TextView"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textViewPTY"
@@ -68,6 +72,6 @@
         android:layout_alignStart="@+id/textViewPTX"
         android:layout_below="@+id/textViewPTX"
         android:text="TextView"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
 </RelativeLayout>

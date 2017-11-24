@@ -52,9 +52,9 @@ public class PoolAdapter extends ArrayAdapter<HashMap<String,String>>{
         viewHolder.ptY.setText(pool.get("pointgeoY"));
 
         if (pool.get("municipale").equals("true")){
-            viewHolder.image.setImageDrawable(new ColorDrawable(Color.GREEN));
+            viewHolder.image.setImageResource(R.drawable.public_pool);
         }else if (pool.get("municipale").equals("false")){
-            viewHolder.image.setImageDrawable(new ColorDrawable(Color.RED));
+            viewHolder.image.setImageResource(R.drawable.private_pool);
         }else{
             viewHolder.image.setImageDrawable(new ColorDrawable(Color.YELLOW));
         }

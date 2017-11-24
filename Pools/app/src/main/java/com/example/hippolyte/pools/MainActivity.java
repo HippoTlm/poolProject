@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                                     "Récupération réussie !",
                                     Toast.LENGTH_LONG).show();
                             Toast.makeText(MainActivity.this,
-                                    "La couleur verte indique que la piscine est municipale.",
+                                    "Les piscines municipales sont en bleu.",
                                     Toast.LENGTH_LONG).show();
 
                             //parsing du JSON
