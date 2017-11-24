@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     String ptX2 = tvPointGeoX.getText().toString();
                     String ptY2 = tvPointGeoY.getText().toString();
 
-                    //envoi des infos de la piscines dans un intent
+                    //envoi des infos de la piscine dans un intent
                     Intent intent = new Intent(getApplicationContext(),PoolDetails.class);
                     intent.putExtra("cp",cp2);
                     intent.putExtra("url",url2);

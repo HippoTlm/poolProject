@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ public class PoolDetails extends AppCompatActivity {
     private TextView tvCP;
     private TextView tvPtX;
     private TextView tvPtY;
+    private Button btnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,23 +31,23 @@ public class PoolDetails extends AppCompatActivity {
         tvCP = (TextView) findViewById(R.id.cPVille);
         tvPtX = (TextView) findViewById(R.id.ptXVille);
         tvPtY = (TextView) findViewById(R.id.ptYVille);
+        btnMap= (Button) findViewById(R.id.buttonMap);
 
         //recupere les infos de la piscine dans l'intent pour l'affichage des details
         Bundle bundle = getIntent().getExtras();
         tvNom.setText(bundle.getString("libelle"));
-        tvVille.setText(bundle.getString("ville"));
+        tvVille.setText("Ville: "+bundle.getString("ville"));
+
 
         //souligne l'url
         SpannableString content = new SpannableString(bundle.getString("url"));
         content.setSpan(new UnderlineSpan(), 0, bundle.getString("url").length(), 0);
         tvAdresse.setText(content);
 
-        tvCP.setText(bundle.getString("cp"));
+        tvCP.setText("Code postal: "+bundle.getString("cp"));
         tvPtX.setText(bundle.getString("ptX"));
         tvPtY.setText(bundle.getString("ptY"));
 
-        //a enlever a la fin
-        Toast.makeText(this, tvPtX.getText()+" -- "+tvPtY.getText(), Toast.LENGTH_SHORT).show();
 
         //permet de rechercher l'url dans le navigateur
         tvAdresse.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +62,26 @@ public class PoolDetails extends AppCompatActivity {
                 Intent lancerNavigateur = new Intent(Intent.ACTION_VIEW);
                 lancerNavigateur.setData(WebUrl);
                 startActivity(lancerNavigateur);
+            }
+        });
+
+        //permet de lancer la map
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Ptx;
+                String Pty;
+                String nom;
+                Ptx = tvPtX.getText().toString();
+                Pty = tvPtY.getText().toString();
+                nom = tvNom.getText().toString();
+
+                Intent lancerMap = new Intent(getApplicationContext(),MapsActivity.class);
+                lancerMap.putExtra("Ptx", Ptx);
+                lancerMap.putExtra("Pty", Pty);
+                lancerMap.putExtra("nom", nom);
+                startActivity(lancerMap);
+
             }
         });
     }
