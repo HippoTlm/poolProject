@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.hippolyte.pools.PoolDetails"
-    android:background="@drawable/dog">
+    android:background="@drawable/harley">
 
     <TextView
         android:id="@+id/nomPiscine"
