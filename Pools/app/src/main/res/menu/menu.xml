@@ -9,5 +9,4 @@
         android:orderInCategory="22"
         android:title="Actualiser"
         app:showAsAction="always" />
-
 </menu>

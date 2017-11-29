@@ -3,7 +3,14 @@
     package="com.example.hippolyte.pools">
     //autorise l'accès internet
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +29,33 @@
         //renseigne la bibliothèque utilisée (google map)
         <uses-library android:name="com.google.android.maps" />
 
-        <activity android:name=".PoolDetails"></activity>
+<<<<<<< HEAD
+<<<<<<< HEAD
+        <activity android:name=".PoolDetails">
+        </activity>
+=======
+=======
+>>>>>>> 09c32d20fc13289e07c181404b7eaabe7462a735
+        <activity android:name=".PoolDetails" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
+<<<<<<< HEAD
+>>>>>>> 09c32d20fc13289e07c181404b7eaabe7462a735
+=======
+>>>>>>> 09c32d20fc13289e07c181404b7eaabe7462a735
     </application>
 
 </manifest>
