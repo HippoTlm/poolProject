@@ -60,44 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvListViewPools =(ListView)findViewById(R.id.listViewPools);
 
-        //appel de l'adaptater pour afficher les piscines en liste
-        ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
-        PoolAdapter adapter = new PoolAdapter(this,poolList);
-        tvListViewPools.setAdapter(adapter);
-
-        if(poolList.size()!=0) {
-            tvListViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                //clic sur une piscine pour afficher ses details
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    tvVille = (TextView) view.findViewById(ville);
-                    tvLibelle = (TextView) view.findViewById(R.id.nom);
-                    tvCP = (TextView) view.findViewById(R.id.textViewCP);
-                    tvURL = (TextView) view.findViewById(R.id.textViewURL);
-                    tvPointGeoX = (TextView) view.findViewById(R.id.textViewPTX);
-                    tvPointGeoY = (TextView) view.findViewById(R.id.textViewPTY);
-
-                    String libelle2 = tvLibelle.getText().toString();
-                    String ville2 = tvVille.getText().toString();
-                    String url2 = tvURL.getText().toString();
-                    String cp2 = tvCP.getText().toString();
-                    String ptX2 = tvPointGeoX.getText().toString();
-                    String ptY2 = tvPointGeoY.getText().toString();
-
-                    //envoi des infos de la piscine dans un intent
-                    Intent intent = new Intent(getApplicationContext(),PoolDetails.class);
-                    intent.putExtra("cp",cp2);
-                    intent.putExtra("url",url2);
-                    intent.putExtra("libelle",libelle2);
-                    intent.putExtra("ville",ville2);
-                    intent.putExtra("ptX",ptX2);
-                    intent.putExtra("ptY",ptY2);
-                    startActivity(intent);
-                }
-            });
-        }else{
-            Toast.makeText(this,"No pools yet!",Toast.LENGTH_SHORT).show();
-        }
+        afficherList();
     }
 
 
@@ -180,10 +143,8 @@ public class MainActivity extends AppCompatActivity {
                                     poolsRepo.insert(newPool);
                                 }
 
-                                //mise a jour de la liste des piscines apres recuperation du JSON
-                                ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
-                                PoolAdapter adapter = new PoolAdapter(MainActivity.this,poolList);
-                                tvListViewPools.setAdapter(adapter);
+                               afficherList();
+
                             }catch (JSONException e){
                                 Toast.makeText(MainActivity.this, "An error ocurred", Toast.LENGTH_SHORT).show();
                             }
@@ -200,4 +161,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void afficherList(){
+
+        //appel de l'adaptater pour afficher les piscines en liste
+        ArrayList<HashMap<String,String>> poolList = poolsRepo.getPoolsList();
+        PoolAdapter adapter = new PoolAdapter(this,poolList);
+        tvListViewPools.setAdapter(adapter);
+
+        if(poolList.size()!=0) {
+            tvListViewPools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                //clic sur une piscine pour afficher ses details
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    tvVille = (TextView) view.findViewById(ville);
+                    tvLibelle = (TextView) view.findViewById(R.id.nom);
+                    tvCP = (TextView) view.findViewById(R.id.textViewCP);
+                    tvURL = (TextView) view.findViewById(R.id.textViewURL);
+                    tvPointGeoX = (TextView) view.findViewById(R.id.textViewPTX);
+                    tvPointGeoY = (TextView) view.findViewById(R.id.textViewPTY);
+
+                    String libelle2 = tvLibelle.getText().toString();
+                    String ville2 = tvVille.getText().toString();
+                    String url2 = tvURL.getText().toString();
+                    String cp2 = tvCP.getText().toString();
+                    String ptX2 = tvPointGeoX.getText().toString();
+                    String ptY2 = tvPointGeoY.getText().toString();
+
+                    //envoi des infos de la piscine dans un intent
+                    Intent intent = new Intent(getApplicationContext(),PoolDetails.class);
+                    intent.putExtra("cp",cp2);
+                    intent.putExtra("url",url2);
+                    intent.putExtra("libelle",libelle2);
+                    intent.putExtra("ville",ville2);
+                    intent.putExtra("ptX",ptX2);
+                    intent.putExtra("ptY",ptY2);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            Toast.makeText(this,"No pools yet!",Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
