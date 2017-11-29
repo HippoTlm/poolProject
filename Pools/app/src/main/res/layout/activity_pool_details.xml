@@ -35,7 +35,9 @@
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/cPVille"
@@ -46,7 +48,9 @@
         android:layout_marginRight="10dp"
         android:text="TextView"
         android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/urlVille"
@@ -54,12 +58,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/cPVille"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:text="TextView"
         android:textAllCaps="false"
-        android:textColor="@color/colorBlue"
+        android:textColor="@android:color/white"
         android:textSize="24sp" />
 
     <TextView

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hippolyte.pools">
     //autorise l'accès internet
@@ -28,14 +28,9 @@
         </activity>
         //renseigne la bibliothèque utilisée (google map)
         <uses-library android:name="com.google.android.maps" />
-
-<<<<<<< HEAD
-<<<<<<< HEAD
         <activity android:name=".PoolDetails">
         </activity>
-=======
-=======
->>>>>>> 09c32d20fc13289e07c181404b7eaabe7462a735
+
         <activity android:name=".PoolDetails" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -52,10 +47,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-<<<<<<< HEAD
->>>>>>> 09c32d20fc13289e07c181404b7eaabe7462a735
-=======
->>>>>>> 09c32d20fc13289e07c181404b7eaabe7462a735
+
     </application>
 
 </manifest>
